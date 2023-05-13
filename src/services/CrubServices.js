@@ -1,6 +1,6 @@
-//import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import db from '../models/index';
-import { raw } from 'body-parser';
+// import { raw } from 'body-parser';
 const salt = bcrypt.genSaltSync(10);
 let createNewUser = async (data) => { 
     return new Promise(async(resolve, reject) => { 
@@ -8,7 +8,7 @@ let createNewUser = async (data) => {
           let hashPasswordFromBcrypt = await hashUserPassword(data.password);
             await db.User.create({
                 email: data.email,
-                password: data.password,
+                password: hashPasswordFromBcrypt,
                 firstName: data.firstName,
                 lastName: data.lastName,
                 address: data.address,
@@ -31,8 +31,8 @@ let createNewUser = async (data) => {
 let hashUserPassword = (password) => {
     return new Promise(async(resolve, reject) => {
         try {
-//            let hashPassword = await bcrypt.hashSync(password, salt);
-//            resolve(hashPassword);
+           let hashPassword = await bcrypt.hashSync(password, salt);
+            resolve(hashPassword);
         } catch (e) {
             reject(e);
         }

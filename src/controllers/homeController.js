@@ -1,4 +1,4 @@
-import { json } from 'body-parser';
+//import { json } from 'body-parser';
 import db from '../models/index';
 import CrubServices from '../services/CrubServices';
 let getHomPage = async (req,res) => {
